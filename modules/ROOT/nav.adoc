@@ -1,2 +1,3 @@
-* xref:index.adoc[TOPIC]
-** xref:CATEGORY/index.adoc[SUB TOPIC]
+* xref:index.adoc[Programming]
+** xref:perl/index.adoc[Perl]
+*** xref:perl/notes.adoc[Perl Notes]

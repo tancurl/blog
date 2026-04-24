@@ -1,6 +1,6 @@
-name: LABEL
+name: programming
 version: v0.1.0
-title: TOPIC
+title: Programming
 nav:
 - modules/ROOT/nav.adoc
 
