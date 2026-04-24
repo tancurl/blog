@@ -1,0 +1,2 @@
+* xref:index.adoc[TOPIC]
+** xref:CATEGORY/index.adoc[SUB TOPIC]

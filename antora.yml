@@ -1,0 +1,15 @@
+name: LABEL
+version: v0.1.0
+title: TOPIC
+nav:
+- modules/ROOT/nav.adoc
+
+asciidoc: 
+  attributes: 
+    skip-front-matter: true
+    icons: font
+    icon-set: fi
+    sectnums: true
+    toc: false
+    source-highlighter: highlight.js
+
