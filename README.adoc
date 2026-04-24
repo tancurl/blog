@@ -1,18 +1,3 @@
-= Topic Starter
+= Git: The Version Control Program
 
-This is a ready-to-go template to use as the starting point of creating a new
-topic. Create the new branch from here.
-
-=== Create new branch from this point
-
-[source,bash,title=regular flow]
-----
-git checkout -b NEW-TOPIC topic
-----
-
-[source,bash,title=worktree]
-----
-git worktree add -b NEW-TOPIC NEW-TOPIC topic
-----
-
-Now begin writing.
+The all mightly git program.

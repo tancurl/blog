@@ -1,0 +1,719 @@
+---
+title: "Git"
+authors: ["Hossein Esmail"]
+date: "2024-09-26T09:54:32+03:30"
+language: en
+draft: false
+toc: true
+tags: ["git", "vcs"]
+description: |
+   git and git-worktree (bare repository)
+---
+
+= Git
+:toc:
+:icon-set: font
+:numbered:
+
+== init
+
+This will create a *local* git repository.
+
+[source,bash]
+----
+git init
+----
+
+Also you can git it an *initial branch name*:
+
+[source,bash]
+----
+git init --initial-branch=trunk
+----
+
+== config
+
+You can configure git to behave how you like it to do.
+
+.Some popular options are:
+[source,bash]
+----
+user.name = Your name        # critical
+user.email = your@email.com  # critical
+core.editor = vim      # default git's text editor
+core.autocrlf = input  # for fixing EOL character across multiple OSs
+commit.gpgsign = true  # signed commits using GPG
+tag.gpgSign = true     #   //   tags     //   // 
+merge.ff = true        # fast-forward only when merging/pulling/etc..
+init.defaultBranch = master  # default branch for `git init`
+color.pager = true           # colored output e.g `git log --oneline`
+----
+
+.If you're wondering How to apply these settings on the command line:
+[source,bash]
+----
+git config --global user.name "Your Name"
+git config --global user.email you@email.com
+git config --global merge.ff true
+----
+
+== staging area
+
+Middle stage between _Untracked_ files and _Tracked_ files. 
+
+[source,bash]
+----
+git add .
+git add <path/to/file>
+----
+
+[NOTE]
+====
+To see or do anything on files in the staging area (beside committing them),
+you need to pass `--cached` argument to the git _subcommand_.
+
+[source,bash]
+----
+git rm --cached <file-name>
+git diff --cached .
+----
+====
+
+== status
+
+Show the status of files in current repository.
+
+[source,bash]
+----
+git status
+----
+....
+On branch notes/git
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+    modified:   git.adoc
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+    .session.vim/
+    asciidoctor-theme.yml
+    git.pdf
+
+no changes added to commit (use "git add" and/or "git commit -a")
+....
+
+.Short version:
+[source,bash]
+----
+git status -s
+----
+....
+ M git.adoc
+?? .session.vim/
+?? asciidoctor-theme.yml
+?? git.pdf
+....
+
+[NOTE]
+====
+* `??`: Untracked files
+* `M` : Modified tracked files
+* `A` : Files in staging area but not committed
+* `UU`: Files having _conflicts_ which needs extra manual/automated work
+====
+
+.If you want to see the status from the current working directory:
+[source,bash]
+----
+git status -s .
+----
+....
+ M git.adoc
+?? .session.vim/
+?? asciidoctor-theme.yml
+?? git.pdf
+....
+
+== commit
+
+Look at *commit* as adding changes to the _git history_.
+
+[source,bash]
+----
+git commit
+----
+
+The command above will open the _git's text editor_ for you to write a _commit
+message_ for the changes you've made. To avoid that you can give the message
+at the command line:
+
+[source,bash]
+----
+git commit -m 'my very obvious commit message'
+----
+
+.Some extra flags for commit:
+[source,bash]
+----
+--no-gpg-sign  # don't sign the commit, just for this one
+--amend        # apply changes to the last commit, no new commit
+               # Warning: be careful with this, it can mess things up
+--no-edit      # used with `--amend`, don't change commit message
+----
+
+=== authenticate
+
+For committing you need to be authenticated. You can this in a global scope
+(which is recommended for most users) or do it in a per-repo basis:
+
+.Global
+[source,bash]
+----
+git config --global user.name 'You Name'
+git config --global user.email 'you@email.com'
+----
+
+.Per Repository, inside the local repository
+[source,bash]
+----
+git config user.name 'You Name'
+git config user.email 'you@email.com'
+----
+
+[NOTE]
+====
+Keep that in mind for working with services like *github.com* and *gitlab.com*,
+the email you provide to the git, must be the same email as the one which you
+gave these services.
+====
+
+== log
+
+Shows information about the current repository such as *branches*, *commits*,
+HEAD position, etc.
+
+[source,bash]
+----
+git log
+----
+....
+commit f80c36530015cb932a4d60c06f94f93cf22570cf
+Author: Hossein Esmail <hosteam01@gmail.com>
+Date:   Sun Oct 13 23:38:50 2024 +0330
+
+    more / better notes for docker
+
+commit 6e057f8ee426d75045693f417d9769c8ff2093bd
+Author: Hossein Esmail <hosteam01@gmail.com>
+Date:   Fri Oct 11 15:17:28 2024 +0330
+
+    import contents
+
+commit a9555db8084619a61b2da3c51ae04c972a242f94
+Author: Hos Es <62862610+hossein-lap@users.noreply.github.com>
+Date:   Wed Oct 9 20:13:41 2024 +0330
+
+    Initial commit
+....
+
+.Some extra flags
+[source,bash]
+----
+--oneline  # show short commit hash and only the commit message
+--all      # show all branches
+--graph    # draw the graph for branches
+--stat     # show changed files
+--show-signature  # show gpg signature
+----
+
+[source,bash]
+----
+git log --all --oneline --graph
+----
+....
+* afd0009 (notes/perl, origin/notes/perl) Add array section
+* f80c365 (HEAD -> notes/git, origin/notes/git) more docker notes
+* 6e057f8 import contents
+* a9555db Initial commit
+....
+
+.What is *HEAD*?
+
+*HEAD* is a name which points to your *current working area*'s position in the
+git repository. In the above output, inside the parentheses on the second line
+you can see `HEAD \-> notes/git`, that mean *HEAD is pointing at notes/git
+branch*. `notes/git` is the name of the branch that I'm writing this document
+inside of it that will be merged later with `master` branch of this repository.
+
+Now that we know HEAD is the current position, let's be a little more proactive
+shall we? Okay, what about pointing at *one previous position* or
+*two previous*? Easy, `HEAD~1` and `HEAD~2` are for that.
+
+[TIP]
+====
+`HEAD~<number>` means `<number>` times before the *current position of HEAD*.
+====
+
+== remotes
+
+The remote URL(s) that you are/will be working with. Most of the time it's
+called *origin* but remember, it's just a name which points to an URL.
+
+[source,bash]
+----
+git remote
+----
+....
+origin
+....
+
+.Verbose output
+[source,bash]
+----
+git remote -v
+----
+....
+origin    git@github.com:hossein-lap/blog.posts.git (fetch)
+origin    git@github.com:hossein-lap/blog.posts.git (push)
+....
+
+.Working with remotes
+[source,bash]
+----
+git remote add <name> <url>  # add new remote URL
+git remote remove <name>     # remove existing remote URL
+----
+
+. remote URL can be another directory/folder on the same machine. git does
+  not care.
+. If you want to connect a local repository to a remote one, you need to create
+  the remote yourself
+
+[NOTE]
+====
+Let's say you are working on a project on your local machine and now you've
+decided to share it on github, you go create the repository on github, and
+create a remote using `git remote add <name> <url>` command.
+====
+
+=== ssh vs https
+
+Most developers prefer using `ssh` when it comes to working with remote
+repositories. `ssh` has a SHA-256 hash-based key authentication method.
+Unlike `https` which requires username and password each time for the
+authentication.
+
+.Generate ssh key
+[source,bash]
+----
+ssh-keygen
+----
+
+[IMPORTANT]
+====
+After creating a ssh key-pair, you need to add the *public* pair of the key to
+your github/gitlab account. Look for a `*.pub` file in your `~/.ssh` directory.
+====
+
+.ssh remote URL:
+....
+origin    git@github.com:hossein-lap/blog.posts.git (fetch)
+origin    git@github.com:hossein-lap/blog.posts.git (push)
+....
+
+.https remote URL:
+....
+origin    https://github.com/hossein-lap/blog.posts (fetch)
+origin    https://github.com/hossein-lap/blog.posts (push)
+....
+
+== clone
+
+Cloning a repository is like downloading it from your local machine but with or
+without the commit histories.
+
+[source,bash]
+----
+git clone <url>
+git clone https://github.com/hossein-lap/blog.posts
+git clone git@github.com:hossein-lap/blog.posts.git
+----
+
+.Some extra flags
+[source,bash]
+----
+--depth <number>   # depths of previous commit history
+--branch <name>    # move HEAD to the <name> branch after clone
+--origin <name>    # use <name> instead of default `origin` for remote
+--bare             # clone the bare repo (useful but very advanced)
+                   # see the last section for more information.
+----
+
+== fetch
+
+Synchronize the local repository with the remote repository. This does not change
+anything in the current working area. Just synchronizing.
+
+[source,bash]
+----
+git fetch --all        # fetch all changes from all branches
+git fetch --unshallow  # fetch all the missing contents from remote
+----
+
+== push
+
+Upload the git history from local to the remote.
+
+[source,bash]
+----
+git push <remote-name> <branch-name>
+----
+
+[source,bash]
+----
+git push origin master
+----
+
+.Forced push
+[CAUTION]
+====
+You need to use `--force` flag if you want to have used `--amend` flag
+(you've amended a commit) when pushing to a *unprotected* remote branch.
+
+[source,bash]
+----
+git commit --amend --no-edit
+git push origin feature/new-module --force
+----
+.Use this with caution
+If the branch if *protected* you cannot use `--force` with.
+You must remove it from *protected branches* first.
+====
+
+== pull
+
+Get the changes from remote repository to the local repository.
+
+[source,bash]
+----
+git pull origin master
+----
+
+[CAUTION]
+====
+Be careful what branch are you currently on and what branch are you pulling
+from. This can mess things up very easily.
+====
+
+== branch
+
+Working with branches.
+Branches are created from one point in the history which is you current branch
+
+.Your current branch
+[source,bash]
+----
+git branch
+----
+....
+* notes/git
+....
+
+.Create new branch
+[source,bash]
+----
+git switch -C <new-branch-name>
+----
+
+Above command will create a new branch from your current position on the git
+history (your current branch, your current commit) and switch to it.
+
+
+Alternatively you can use `checkout` (sometimes you *need* to use `checkout`) but
+the `checkout` command does a lot more than creating/switching branches.
+*It can be dangerous*.
+
+[source,bash]
+----
+git checkout -b <new-branch-name>
+----
+
+.Switch back to previous branch
+[source,bash]
+----
+git checkout -
+git switch -
+----
+
+== stash
+
+To be able to change branches your current working area must be clean. Now imagine
+you're middle of working on something and something new comes up which is
+important, git won't allow you to change your branch until you commit your
+changes (make your working area clean) so what you're gonna do? Apply a temp
+commit? (you can do that on paper but it's advised against doing this). Here
+`stash` comes to save the day.
+
+`git stash` takes all your changes (on tracked files only) and temporarily
+moves them on *stash area* so you can access it (move it back to your working
+area) after you've did you explorations.
+
+Let's see how `git log` looks like before stashing the changes:
+
+.Move changes to stash from working area
+[source,bash]
+----
+git log --oneline --all --graph
+----
+....
+* afd0009 Add array section
+* f80c365 more / better notes for docker
+* 6e057f8 import contents
+* a9555db Initial commit
+....
+
+.Stashing changes
+[source,bash]
+----
+git stash push
+----
+....
+Saved working directory and index state WIP on notes/git: f80c365 more / better notes for docker
+....
+
+Let's see how `git log` looks like at this point
+[source,bash]
+----
+git log --oneline --all --graph
+----
+....
+*   aa604f7 WIP on notes/git: f80c365 more / better notes for docker
+|\  
+| * 977460d index on notes/git: f80c365 more / better notes for docker
+|/  
+| * afd0009 Add array section
+|/  
+* f80c365 more / better notes for docker
+* 6e057f8 import contents
+* a9555db Initial commit
+....
+
+See all the new forks and diversions from the commits?
+
+....
+*   aa604f7 WIP on notes/git: f80c365 more / better notes for docker
+|\  
+| * 977460d index on notes/git: f80c365 more / better notes for docker
+|/  
+| * afd0009 Add array section
+|/  
+* f80c365 more / better notes for docker
+....
+
+.Move back changes to working area from stash
+[source,bash]
+----
+git stash pop
+----
+....
+On branch notes/git
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   git.adoc
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        .session.vim/
+        asciidoctor-theme.yml
+        git.pdf
+        git.xml
+
+no changes added to commit (use "git add" and/or "git commit -a")
+Dropped refs/stash@{0} (a5eec65b3011ad09cd73c9845646ea1b87659f9e)
+....
+
+Now everything is exactly how it was before stashing:
+[source,bash]
+----
+git log --oneline --all --graph
+----
+....
+* afd0009 Add array section
+* f80c365 more / better notes for docker
+* 6e057f8 import contents
+* a9555db Initial commit
+....
+
+[TIP]
+====
+stash has a stack-like structure.
+====
+
+[NOTE]
+====
+Alternatively you can use a `bare repo` with git's `worktree` feature which
+allows you to have multiple branches checked-out at the same time. But it can
+add complexity to your workflow. You can take a look at the last section of
+this
+document.
+====
+
+== rebase
+
+Rebasing a branch is pulling the point branch was forked (created from) to a
+new point.
+
+.git's manpage does a good explanation about it:
+....
+Assume the following history exists and the current branch is "topic":
+
+              A---B---C topic
+             /
+        D---E---F---G master
+
+From this point, the result of either of the following commands:
+
+    git rebase master
+    git rebase master topic
+
+would be:
+
+                      A'--B'--C' topic
+                     /
+        D---E---F---G master
+....
+
+[IMPORTANT]
+====
+All the git manpages are available through either `git <subcommand> --help`
+command or `man git-<subcommand>` command on the command line.
+
+----
+git rebase --help
+man git-rebase
+----
+====
+
+== restore
+
+Restores the state of file(s) to a previous or current state in git *history*.
+
+[CAUTION]
+====
+[source,bash]
+----
+git restore --source=HEAD .
+----
+====
+
+The above command will remove all changes on the current working directory
+which are not in neither staging area nor have been committed.
+The `.` means *current working directory*. You can replace it with file name(s)
+or (some) directory.
+
+== reset
+
+Okay, now we are entering the *DANGER* zone. The reset command *will remove
+your commit history*. Especially with the `--hard` flag.
+
+[WARNING]
+====
+[source,bash]
+----
+git reset --hard HEAD~1
+git reset --hard 6e057f8 # reset everything to a certain point
+                         # using commit hash
+----
+====
+
+== patching
+
+You can get a diff file using `git diff` command and use it later.
+These "diff" files contains all changes on file(s) which can be applied on same
+files somewhere else.
+
+.Get diff file
+[source,bash]
+----
+git diff HEAD~1 HEAD > <file-name>
+git diff HEAD~1 HEAD > test-changes.diff
+----
+
+.Apply the diff
+[source,bash]
+----
+patch -p1 < <file-name>
+patch -p1 < test-changes.diff
+----
+
+[IMPORTANT]
+====
+Keep that in mind which the sequence of stages/commits must be *older to newer*
+if you want to *apply* the changes and *newer to older* if you want to *revert*
+the changes.
+Reverts
+
+[horizontal]
+* *Older to newer*: Applies changes
+* *Newer to older*: Reverts changes
+====
+
+[NOTE]
+====
+This process is called *patching* or *applying patch*.
+====
+
+[TIP]
+====
+When you are applying patch(es), you must be at the *exact directory* that
+you've get the diff file from.
+On the other words, applying patches only works when
+you are applying them at the same *root directory* of getting the patch (diff
+file).
+====
+
+.A diff file
+[source,bash]
+----
+git diff Makefile default-theme.yml
+----
+[source,diff]
+----
+diff --git a/Makefile b/Makefile
+index 16ab52b..db20550 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,6 +1,6 @@
+ NAME = ttr
+ 
+ all:
+-    asciidoctor -a stylesheet=my-stylesheet.css ttr.adoc
+-    # asciidoctor -a linkcss -a copycss README.adoc
++    # asciidoctor -a stylesheet=my-stylesheet.css ttr.adoc
++    asciidoctor -a linkcss -a copycss ttr.adoc
+     asciidoctor-pdf ttr.adoc --theme hos.yml
+diff --git a/default-theme.yml b/default-theme.yml
+index f23711b..889785a 100644
+--- a/default-theme.yml
++++ b/default-theme.yml
+@@ -43,11 +43,11 @@ base:
+   border_color: EEEEEE
+   border_radius: 4
+   border_width: 0.5
+-base:
+-  font:
+-    color: #333333
+-    family: Times-Roman
+-    size: 12
++# base:
++#   font:
++#     color: #333333
++#     family: Times-Roman
++#     size: 12
+ role:
+   lead:
+     font_size: $base_font_size_large
+----
+

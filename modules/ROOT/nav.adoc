@@ -1,2 +1,3 @@
-* xref:index.adoc[TOPIC]
-** xref:CATEGORY/index.adoc[SUB TOPIC]
+* xref:index.adoc[Git]
+** xref:basic.adoc[Git Basic Workflow]
+** xref:worktree.adoc[Git Worktree]

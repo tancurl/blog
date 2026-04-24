@@ -1,6 +1,6 @@
-name: LABEL
+name: git
 version: v0.1.0
-title: TOPIC
+title: Git
 nav:
 - modules/ROOT/nav.adoc
 
