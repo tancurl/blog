@@ -1,2 +1,2 @@
-* xref:index.adoc[TOPIC]
-** xref:CATEGORY/index.adoc[SUB TOPIC]
+* xref:index.adoc[Linux]
+// ** xref:CATEGORY/index.adoc[SUB TOPIC]

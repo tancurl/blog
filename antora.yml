@@ -1,6 +1,6 @@
-name: LABEL
+name: linux
 version: v0.1.0
-title: TOPIC
+title: UNIX/Linux
 nav:
 - modules/ROOT/nav.adoc
 

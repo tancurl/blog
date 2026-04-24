@@ -1,0 +1,7 @@
+= *NIX
+
+The *NIX family is a very fun and interesting topic for me. I personall really
+enjoy using and tweaking them. They are the bare-bone of the today internet,
+banking systems, spaceships, even smart phones and IoT devices.
+
+
