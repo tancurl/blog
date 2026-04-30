@@ -1,3 +1,6 @@
 * xref:index.adoc[Programming]
+** xref:python/index.adoc[Python]
 ** xref:perl/index.adoc[Perl]
 *** xref:perl/notes.adoc[Perl Notes]
+** xref:lua/index.adoc[Lua]
+** xref:go/index.adoc[Go]
