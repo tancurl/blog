@@ -1,0 +1,80 @@
+site:
+  url: https://blog.tanren.fun
+  title: Tanren
+  start_page: blog::index.adoc
+  # nav:
+  #   - title: Git
+  #     url: git
+  #   - title: Programming
+  #     url: programming
+  #   # - title: Bar
+  #   #   body:
+  #   #     - name: Jane Doe
+  #   #       url: janejoe.org
+  #   #     - name: Hanna Montana
+  #   #       url: hanamontana.xyz
+  #   # - title: Baz
+  #   #   body:
+  #   #     - name: Jane Doe
+  #   #       url: janejoe.org
+  #   #     - name: Hanna Montana
+  #   #       url: hanamontana.xyz
+
+content:
+  sources:
+  - url: https://git.tanren.fun/primejade/blog.git
+    start_paths: /
+    branches: master
+  - url: https://git.tanren.fun/primejade/blog.git
+    branches: linux
+    start_paths: /
+  - url: https://git.tanren.fun/primejade/blog.git
+    branches: git
+    start_paths: /
+  # - url: https://git.tanren.fun/primejade/blog.git
+  #   branches: container
+  #   start_paths: /
+  - url: https://git.tanren.fun/primejade/blog.git
+    branches: programming
+    start_paths: /
+
+runtime:
+  cache_dir: ./cache/antora
+
+  # log: 
+  #   format: json 
+  #   failure_level: warn 
+  #   level: all 
+  #   level_format: number 
+  #   destination: 
+  #     file: ./antora.log 
+  #     append: true 
+  #     buffer_size: 4096 
+  #     sync: true 
+
+# network: 
+#   http_proxy: http://127.0.0.1:20171
+#   https_proxy: http://127.0.0.1:20171
+
+ui:
+  bundle:
+    url: ./ui-bundle.zip
+    snapshot: true
+
+output:
+  clean: true
+  dir: ./build
+
+asciidoc: 
+  attributes: 
+    skip-front-matter: true
+    icons: font
+    icon-set: fi
+    sectnums: false
+    toc: false
+    source-highlighter: highlight.js
+    # highlightjs-theme: tomorrow-night
+    # pygments-style: solarized-light
+    # source-highlighter: rouge
+    # rouge-style: solarized-light
+
