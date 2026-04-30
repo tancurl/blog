@@ -12,19 +12,18 @@ description: |
 
 = Git
 :author: primejade
+:source-language: bash
 
 == init
 
 This will create a *local* git repository.
 
-[source,bash]
 ----
 git init
 ----
 
 Also you can git it an *initial branch name*:
 
-[source,bash]
 ----
 git init --initial-branch=trunk
 ----
@@ -34,21 +33,20 @@ git init --initial-branch=trunk
 You can configure git to behave how you like it to do.
 
 .Some popular options are:
-[source,bash]
+[source,ini]
 ----
-user.name = Your name        # critical
-user.email = your@email.com  # critical
-core.editor = vim      # default git's text editor
-core.autocrlf = input  # for fixing EOL character across multiple OSs
-commit.gpgsign = true  # signed commits using GPG
-tag.gpgSign = true     #   //   tags     //   // 
-merge.ff = true        # fast-forward only when merging/pulling/etc..
-init.defaultBranch = master  # default branch for `git init`
-color.pager = true           # colored output e.g `git log --oneline`
+user.name = Your name        ; critical
+user.email = your@email.com  ; critical
+core.editor = vim      ; default git's text editor
+core.autocrlf = input  ; for fixing EOL character across multiple OSs
+commit.gpgsign = true  ; signed commits using GPG
+tag.gpgSign = true     ;   //   tags     //   // 
+merge.ff = true        ; fast-forward only when merging/pulling/etc..
+init.defaultBranch = master  ; default branch for `git init`
+color.pager = true           ; colored output e.g `git log --oneline`
 ----
 
 .If you're wondering How to apply these settings on the command line:
-[source,bash]
 ----
 git config --global user.name "Your Name"
 git config --global user.email you@email.com
@@ -59,7 +57,6 @@ git config --global merge.ff true
 
 Middle stage between _Untracked_ files and _Tracked_ files. 
 
-[source,bash]
 ----
 git add .
 git add <path/to/file>
@@ -70,7 +67,6 @@ git add <path/to/file>
 To see or do anything on files in the staging area (beside committing them),
 you need to pass `--cached` argument to the git _subcommand_.
 
-[source,bash]
 ----
 git rm --cached <file-name>
 git diff --cached .
@@ -81,7 +77,6 @@ git diff --cached .
 
 Show the status of files in current repository.
 
-[source,bash]
 ----
 git status
 ----
@@ -102,7 +97,6 @@ no changes added to commit (use "git add" and/or "git commit -a")
 ....
 
 .Short version:
-[source,bash]
 ----
 git status -s
 ----
@@ -122,7 +116,6 @@ git status -s
 ====
 
 .If you want to see the status from the current working directory:
-[source,bash]
 ----
 git status -s .
 ----
@@ -137,7 +130,6 @@ git status -s .
 
 Look at *commit* as adding changes to the _git history_.
 
-[source,bash]
 ----
 git commit
 ----
@@ -146,13 +138,11 @@ The command above will open the _git's text editor_ for you to write a _commit
 message_ for the changes you've made. To avoid that you can give the message
 at the command line:
 
-[source,bash]
 ----
 git commit -m 'my very obvious commit message'
 ----
 
 .Some extra flags for commit:
-[source,bash]
 ----
 --no-gpg-sign  # don't sign the commit, just for this one
 --amend        # apply changes to the last commit, no new commit
@@ -166,14 +156,12 @@ For committing you need to be authenticated. You can this in a global scope
 (which is recommended for most users) or do it in a per-repo basis:
 
 .Global
-[source,bash]
 ----
 git config --global user.name 'You Name'
 git config --global user.email 'you@email.com'
 ----
 
 .Per Repository, inside the local repository
-[source,bash]
 ----
 git config user.name 'You Name'
 git config user.email 'you@email.com'
@@ -191,7 +179,6 @@ gave these services.
 Shows information about the current repository such as *branches*, *commits*,
 HEAD position, etc.
 
-[source,bash]
 ----
 git log
 ----
@@ -216,7 +203,6 @@ Date:   Wed Oct 9 20:13:41 2024 +0330
 ....
 
 .Some extra flags
-[source,bash]
 ----
 --oneline  # show short commit hash and only the commit message
 --all      # show all branches
@@ -225,7 +211,6 @@ Date:   Wed Oct 9 20:13:41 2024 +0330
 --show-signature  # show gpg signature
 ----
 
-[source,bash]
 ----
 git log --all --oneline --graph
 ----
@@ -258,7 +243,6 @@ shall we? Okay, what about pointing at *one previous position* or
 The remote URL(s) that you are/will be working with. Most of the time it's
 called *origin* but remember, it's just a name which points to an URL.
 
-[source,bash]
 ----
 git remote
 ----
@@ -267,7 +251,6 @@ origin
 ....
 
 .Verbose output
-[source,bash]
 ----
 git remote -v
 ----
@@ -277,7 +260,6 @@ origin    git@github.com:hossein-lap/blog.posts.git (push)
 ....
 
 .Working with remotes
-[source,bash]
 ----
 git remote add <name> <url>  # add new remote URL
 git remote remove <name>     # remove existing remote URL
@@ -303,7 +285,6 @@ Unlike `https` which requires username and password each time for the
 authentication.
 
 .Generate ssh key
-[source,bash]
 ----
 ssh-keygen
 ----
@@ -331,7 +312,6 @@ origin    https://github.com/hossein-lap/blog.posts (push)
 Cloning a repository is like downloading it from your local machine but with or
 without the commit histories.
 
-[source,bash]
 ----
 git clone <url>
 git clone https://github.com/hossein-lap/blog.posts
@@ -339,7 +319,6 @@ git clone git@github.com:hossein-lap/blog.posts.git
 ----
 
 .Some extra flags
-[source,bash]
 ----
 --depth <number>   # depths of previous commit history
 --branch <name>    # move HEAD to the <name> branch after clone
@@ -353,7 +332,6 @@ git clone git@github.com:hossein-lap/blog.posts.git
 Synchronize the local repository with the remote repository. This does not change
 anything in the current working area. Just synchronizing.
 
-[source,bash]
 ----
 git fetch --all        # fetch all changes from all branches
 git fetch --unshallow  # fetch all the missing contents from remote
@@ -363,12 +341,10 @@ git fetch --unshallow  # fetch all the missing contents from remote
 
 Upload the git history from local to the remote.
 
-[source,bash]
 ----
 git push <remote-name> <branch-name>
 ----
 
-[source,bash]
 ----
 git push origin master
 ----
@@ -379,7 +355,6 @@ git push origin master
 You need to use `--force` flag if you want to have used `--amend` flag
 (you've amended a commit) when pushing to a *unprotected* remote branch.
 
-[source,bash]
 ----
 git commit --amend --no-edit
 git push origin feature/new-module --force
@@ -393,7 +368,6 @@ You must remove it from *protected branches* first.
 
 Get the changes from remote repository to the local repository.
 
-[source,bash]
 ----
 git pull origin master
 ----
@@ -410,7 +384,6 @@ Working with branches.
 Branches are created from one point in the history which is you current branch
 
 .Your current branch
-[source,bash]
 ----
 git branch
 ----
@@ -419,7 +392,6 @@ git branch
 ....
 
 .Create new branch
-[source,bash]
 ----
 git switch -C <new-branch-name>
 ----
@@ -432,13 +404,11 @@ Alternatively you can use `checkout` (sometimes you *need* to use `checkout`) bu
 the `checkout` command does a lot more than creating/switching branches.
 *It can be dangerous*.
 
-[source,bash]
 ----
 git checkout -b <new-branch-name>
 ----
 
 .Switch back to previous branch
-[source,bash]
 ----
 git checkout -
 git switch -
@@ -460,7 +430,6 @@ area) after you've did you explorations.
 Let's see how `git log` looks like before stashing the changes:
 
 .Move changes to stash from working area
-[source,bash]
 ----
 git log --oneline --all --graph
 ----
@@ -472,7 +441,6 @@ git log --oneline --all --graph
 ....
 
 .Stashing changes
-[source,bash]
 ----
 git stash push
 ----
@@ -481,7 +449,6 @@ Saved working directory and index state WIP on notes/git: f80c365 more / better 
 ....
 
 Let's see how `git log` looks like at this point
-[source,bash]
 ----
 git log --oneline --all --graph
 ----
@@ -510,7 +477,6 @@ See all the new forks and diversions from the commits?
 ....
 
 .Move back changes to working area from stash
-[source,bash]
 ----
 git stash pop
 ----
@@ -533,7 +499,6 @@ Dropped refs/stash@{0} (a5eec65b3011ad09cd73c9845646ea1b87659f9e)
 ....
 
 Now everything is exactly how it was before stashing:
-[source,bash]
 ----
 git log --oneline --all --graph
 ----
@@ -600,7 +565,6 @@ Restores the state of file(s) to a previous or current state in git *history*.
 
 [CAUTION]
 ====
-[source,bash]
 ----
 git restore --source=HEAD .
 ----
@@ -618,7 +582,6 @@ your commit history*. Especially with the `--hard` flag.
 
 [WARNING]
 ====
-[source,bash]
 ----
 git reset --hard HEAD~1
 git reset --hard 6e057f8 # reset everything to a certain point
@@ -633,14 +596,12 @@ These "diff" files contains all changes on file(s) which can be applied on same
 files somewhere else.
 
 .Get diff file
-[source,bash]
 ----
 git diff HEAD~1 HEAD > <file-name>
 git diff HEAD~1 HEAD > test-changes.diff
 ----
 
 .Apply the diff
-[source,bash]
 ----
 patch -p1 < <file-name>
 patch -p1 < test-changes.diff
@@ -673,7 +634,6 @@ file).
 ====
 
 .A diff file
-[source,bash]
 ----
 git diff Makefile default-theme.yml
 ----
