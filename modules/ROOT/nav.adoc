@@ -1,2 +1,1 @@
-* xref:index.adoc[Linux]
-// ** xref:CATEGORY/index.adoc[SUB TOPIC]
+* xref:scripting/index.adoc[Shell Scripting]
