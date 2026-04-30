@@ -11,9 +11,7 @@ description: |
 ---
 
 = Git worktree and bare repos
-:toc:
-:icon-set: font
-:numbered:
+:author: primejade
 
 This section is a very advanced topic and is an unique approach to solving some
 problems like changing branches and checking them out at the same time.

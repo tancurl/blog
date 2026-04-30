@@ -11,9 +11,7 @@ description: |
 ---
 
 = Git
-:toc:
-:icon-set: font
-:numbered:
+:author: primejade
 
 == init
 
