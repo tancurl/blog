@@ -1,3 +1,2 @@
-* xref:index.adoc[Git]
-** xref:basic.adoc[Git Basic Workflow]
-** xref:worktree.adoc[Git Worktree]
+* xref:basic.adoc[Git Basic Workflow]
+* xref:worktree.adoc[Git Worktree]
