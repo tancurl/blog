@@ -1,0 +1,157 @@
+== Perl Variables
+:source-language: perl
+
+To manipulate data in your program, you use variables.
+
+Perl provides three types of variables: scalars, lists, and hashes to help you
+manipulate the corresponding data types including scalars, lists, and hashes.
+
+We'll focus on the scalar variable in this section.
+
+=== Naming variables
+
+You use scalar variables to manipulate scalar data such as
+xref:#_perl_numbers[numbers] and xref:#_perl_strings[strings],
+
+A scalar variable starts with a dollar sign (`$`), followed by a letter or
+underscore, after that, any combination of numbers, letters, and underscores.
+The name of a variable can be up to 255 characters.
+
+Perl is case-sensitive. The `$variable` and `$Variable` are different variables.
+
+Perl uses the dollar sign (`$`) as a prefix for the scalar variables because of
+the `$` looks like the character S in the scalar. You can use this tip to
+remember when you want to declare a scalar variable.
+
+.Valid variables:
+----
+$gate = 10;
+$_port = 20;
+----
+
+.Invalid variables:
+----
+$4whatever = 20; # no letter or underscore found after dollar sign ($)
+$email-address = "zen@example.com"; # special character (-) found
+$home url = "http://localhost/perltutorial"; # space is not allowed
+----
+
+=== Declaring variables
+
+Perl doesn't require you to declare a variable before using it.
+
+For example, you can introduce a variable in your program and use it right away
+as follows:
+
+----
+$a = 10;
+$b = 20;
+$c = $a + $b;
+print($c);
+----
+
+In some cases, using a variable without declaring it explicitly may lead to
+problems. Let's take a look at the following example:
+
+----
+$color = 'red';
+print "Your favorite color is " . $colour . "\n";
+----
+
+The expected output was `Your favorite color is red`.
+
+However, in this case, you got `Your favorite color is`, because the `$color`
+and `$colour` are different variables. The mistake was made because of the
+_different variable names_.
+
+To prevent such cases, Perl provides a _pragma_ called `strict` that requires you
+to declare variable explicitly before using it.
+
+In this case, if you use the `my` keyword to declare a variable and try to run
+the script, Perl will issue an error message indicating that a compilation
+error occurred due to the `$colour` variable must be declared explicitly.
+
+----
+#!/usr/bin/perl
+use strict;
+my $color = 'red';
+print "Your favorite color is " . $colour . "\n"
+----
+
+A variable declared with the `my` keyword is a _lexically scoped_ variable.
+
+It means the variable is only accessible inside the enclosing block or all
+blocks nested inside the enclosing block. In other words, the variable is local
+to the enclosing block.
+
+Now, you'll learn a very important concept in programming called variable
+scopes.
+
+=== Perl variable scopes
+
+Let's take a look at the following example:
+
+----
+#!/usr/bin/perl
+use warnings;
+$color = 'red';
+print("my favorite #1 color is " . $color . "\n");
+# another block
+{
+	my $color = 'blue';
+	print("my favorite #2 color is " . $color . "\n");  
+}
+# for checking
+print("my favorite #1 color is " . $color . "\n");
+----
+
+.In the example above
+****
+* First, declared a global variable named `$color`
+* Then, displayed the favorite color by referring to the `$color` variable. As
+  expected, we get the red color in this case
+* Next, created a new block and declared a variable with the same name `$color`
+  using the `my` keyword. The `$color` variable is lexical. It is a local
+  variable and only visible inside the enclosing block
+* After that, inside the block, we displayed the favorite color and we got the
+  `blue` color. The local variable takes priority in this case
+* Finally, following the block, we referred to the `$color` variable and Perl
+  referred to the `$color` global variable
+****
+
+If you want to declare global variables that are visible throughout your
+program or from external packages, you can use `our` keyword as shown in the
+following code:
+
+----
+our $color = 'red';
+----
+
+=== Perl variable interpolation
+
+Perl interpolates variables in double-quoted strings. It means if you place a
+variable inside a double-quoted string, you'll get the value of the variable
+instead of its name.
+
+Let's take a look at the following example:
+
+----
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+my $amount = 20;
+my $s = "The amount is $amount\n";
+print($s);
+----
+
+Perl interpolates the value of `$amount` into the string which is 20.
+
+[NOTE]
+====
+Perl only interpolates scalar variables and
+xref:#_perl_array[array], not xref:#_perl_hash[hashes]. In addition, the
+interpolation is only applied to the double-quoted string, but not the
+single-quoted string
+====
+

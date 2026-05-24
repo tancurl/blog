@@ -1,0 +1,142 @@
+== Perl unless Statement
+:source-language: perl
+
+Before discussing the unless statement, let's revisit Perl's philosophy:
+____
+There is more than one way to do it.
+____
+
+Perl always provides you with an alternative way to achieve what you need to do.
+In programming, you often hear something like this:
+
+* If it's not true, then do this (use `if` not statement).
+* or unless it's true, then do this (use `unless` statement).
+
+The effect is the same but the philosophy is different. That's why Perl
+invented the `unless` statement to increase the readability of code when you
+use it properly.
+
+[NOTE]
+====
+the Perl `unless` statement is equivalent to the `if not` statement
+====
+
+.*_unless_* statement
+----
+statement unless (condition);
+----
+
+Perl executes the statement from right to left, if the condition is `false`,
+Perl executes the statement that precedes the `unless`. If the condition is
+`true`, Perl skips the statement.
+
+If you have more than one statement to execute, you can use the following form
+of the Perl unless statement:
+----
+unless (condition) {
+    // code block
+}
+----
+
+If the `condition` evaluates to `false`, Perl executes the code block,
+otherwise, it skips the code block.
+
+----
+my $a = 10;
+
+unless($a <= 0){
+    print("a is greater than 0\n")
+}
+----
+
+.*_unless..else_* statement
+
+Sometimes you want to say unless the condition is `true`, then do this,
+otherwise do that.
+
+This is where the `unless...else` statement comes into play. See the following
+`unless else` statement:
+
+----
+unless (condition) {
+    // unless code block
+} else {
+    // else code block
+}
+----
+
+If the condition is `false`, Perl will execute the `unless` code block,
+otherwise, Perl will execute the `else` code block.
+
+----
+my $a = 10;
+unless ($a >= 0) {
+    print("a is less than 0\n");
+} else {
+    print("a is greater than or equal 0\n");
+}
+----
+....
+a is greater than or equal 0
+....
+
+.*_unless..elsif..else_* statement
+
+If you have more than one condition for checking with the `unless` statement,
+you can use the `unless elsif else` statement as follows:
+
+----
+unless (condition_1) {
+    // unless code block
+} elsif (condition_2) {
+    // elsif code block
+} else {
+    // else code block
+}
+----
+
+You can have many `elsif` clauses in the `unless elsif` statement.
+
+----
+my $a = 1;
+
+unless ($a > 0) {
+    print("a is less than 0\n");
+} elsif ($a == 0) {
+    print("a is 0\n");
+} else {
+    print("a is greater than 0\n");
+}
+----
+
+.*_unless_* statement guidelines
+****
+====
+You should use the `unless` statement with a simple condition to improve the
+code readability, especially when used as a postfix after another statement
+like the following example:
+
+----
+my $a = 1;
+print("unless used with a very simple condition ONLY.\n") unless($a < 0);
+----
+====
+
+====
+You should avoid using the `unless` statement when the condition is complex and
+requires `else` and/or `elsif` clauses.
+
+If you take a look at the following code, it is difficult to interpret the
+meaning of the condition.
+
+----
+my $a = 1;
+my $b = 10;
+my $c = 20;
+unless ($a < 0 && $b == 10 && $c > 0) {
+    print("unless used with a very complex condition\n");
+}
+----
+====
+****
+

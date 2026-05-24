@@ -1,0 +1,265 @@
+== Perl Operator
+:source-language: perl
+
+Perl operators including numeric operators, string operators, and logical operators.
+
+=== Numeric operators
+
+Perl provides numeric operators to help you operate on numbers including
+arithmetic, Boolean and bitwise operations. Let's examine the different kinds
+of operators in more detail.
+
+.Arithmetic operators
+
+Perl arithmetic operators deal with basic math such as adding, subtracting,
+multiplying, diving, etc. To add (`+`) or subtract (`-`) numbers, you would do
+something as follows:
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+print 10 + 20, "\n"; # 30
+print 20 - 10, "\n"; # 10
+----
+
+To multiply or divide numbers, you use divide (`/`) and multiply (`*`) operators as follows:
+
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+print 10 * 20, "\n"; # 200
+print 20 / 10, "\n"; # 2
+----
+
+When you combine adding, subtracting, multiplying, and dividing operators
+together, Perl will perform the calculation in an order, which is known as
+operator precedence.
+
+The multiply and divide operators have higher precedence than add and subtract
+operators, therefore, Perl performs multiplying and dividing before adding and
+subtracting. See the following example:
+
+----
+print 10 + 20/2 - 5 * 2, "\n"; # 10
+----
+
+Perl performs 20/2 and 5*2 first, therefore you will get 10 + 10 – 10 = 10.
+
+You can use brackets `()` to force Perl to perform calculations based on the
+precedence you want as shown in the following example:
+
+----
+print (((10 + 20) / 2 - 5) * 2); # 20;
+----
+
+To raise one number to the power of another number, you use the exponentiation
+operator.
+
+.Exponentiation operators:
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+print 2**3, "\n"; # = 2 * 2 * 2 = 8.
+print 3**4, "\n"; # = 3 * 3 * 3 * 3 = 81.
+----
+
+To get the remainder of the division of one number by another, you use the modulo operator (`%`).
+
+It is handy to use the modulo operator (`%`) to check if a number is odd or even
+by dividing it by 2 to get the remainder. If the remainder is zero, the number
+is even, otherwise, the number is odd. See the following example:
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+print 4 % 2, "\n"; # 0 even
+print 5 % 2, "\n"; # 1 odd
+----
+
+.Bitwise Operators
+
+Bitwise operators allow you to operate on numbers one bit at a time. Think of a
+number as a series of bits e.g., `125` can be represented in binary form as
+`1111101`. Perl provides all basic bitwise operators including and (`&`), or
+(`|`), exclusive or (`^`), not (`~`) operators, shift right (`>>`), and shift
+left (`<<`) operators.
+
+The bitwise operators perform from right to left. In other words, bitwise
+operators perform from the rightmost bit to the leftmost bit.
+
+.Bitwise operations
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $a = 0b0101; # 5
+my $b = 0b0011; # 3
+
+my $c = $a & $b; # 0001 or 1
+print $c, "\n";
+
+$c = $a | $b; # 0111 or 7
+print $c, "\n";
+
+$c = $a ^ $b; # 0110 or 6
+print $c, "\n";
+
+$c = ~$a; # 11111111111111111111111111111010 (64bits computer) or 4294967290
+print $c, "\n";
+
+$c = $a >> 1; # 0101 shift right 1 bit, 010 or 2
+print $c, "\n";
+
+$c = $a << 1; # 0101 shift left 1 bit, 1010 or 10
+print $c, "\n";
+----
+
+.Comparison operators for numbers
+
+|===
+| Equality | Operators
+
+| Equal
+| `==`
+
+| Not Equal
+| `!=`
+
+| Comparison
+| `<=>`
+
+| Less than
+| `<`
+
+| Greater than
+| `>`
+
+| Less than or equal
+| `<=`
+
+| Greater than or equal
+| `>=`
+|===
+
+All the operators in the table above are obvious except the number comparison
+operator `<=>` which is also known as spaceship operator.
+
+The number comparison operator is often used in sorting numbers. See the code
+below:
+
+++++
+$a <=> $b
+++++
+
+
+* *1* if `$a` is greater than `$b`
+* *0* if `$a` and `$b` are equal
+* *-1* if `$a` is lower than `$b`
+
+.Example
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $a = 10;
+my $b = 20;
+
+print $a <=> $b, "\n";
+
+$b = 10;
+print $a <=> $b, "\n";
+
+$b = 5;
+print $a <=> $b, "\n";
+----
+
+=== String operators
+
+.Comparison operators
+
+|===
+| Equality | Operators
+
+| Equal
+| `eq`
+
+| Not Equal
+| `ne`
+
+| Comparison
+| `cmp`
+
+| Less than
+| `lt`
+
+| Greater than
+| `gt`
+
+| Less than or equal
+| `le`
+
+| Greater than or equal
+| `ge`
+
+|===
+
+.Concatenation operators
+
+Perl provides the concatenation (`.`) and repetition (`x`) operators that allow
+you to manipulate strings
+
+.Concatenation operator (`.`)
+----
+print "This is" . " concatenation operator" . "\n";
+----
+
+.Repetition operators (`x`)
+----
+print "a message " x 4, "\n";
+----
+
+.The chomp() operator
+
+The `chomp()` operator (or function) removes the last character in a string and
+returns a number of characters that were removed. The `chomp()` operator is
+very useful when dealing with the user's input because it helps you remove the
+new line character \n from the string that the user entered.
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $s;
+chomp($s = <STDIN>);
+print $s;
+----
+
+NOTE: The `<STDIN>` is used to get input from users.
+
+=== Logical operators
+
+Logical operators are often used in control statements such as
+xref:#_perl_if_statement[if], xref:#_perl_while_loop[while],
+xref:#_perl_given_statement[given], etc., to control the flow of the program.
+The following are logical operators in Perl:
+
+* `$a && $b` performs the logic `AND` of two variables or expressions. The
+  logical `&&` operator checks if both variables or expressions are true.
+* `$a || $b` performs the logic `OR` of two variables or expressions. The
+  logical `||` operator checks whether a variable or expression is true.
+* `!$a` performs the logic `NOT` of the variable or expression. The logic `!`
+  operator inverts the value of the following variable or expression. In the
+  other words, it converts `true` to `false` or `false` to `true`.
+

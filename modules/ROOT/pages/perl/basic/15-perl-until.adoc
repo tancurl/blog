@@ -1,0 +1,118 @@
+== Perl until Statement
+:source-language: perl
+
+The xref:#_perl_while_loop[while loop] statement executes a block of code repeatedly
+as long as a condition is `true`.
+
+If you replace the keyword `while` by the keyword `until`, the test is reversed
+i.e., it executes a block of code as long as the condition is `false`.
+
+[NOTE]
+====
+The `until` statement is the opposite of the `while` statement.
+====
+
+[NOTE]
+====
+Both `until` and `while` statements evaluate the condition at the beginning of
+each iteration.
+====
+
+.Syntax of the `until` statement:
+----
+until (expression) {
+   # code block
+}
+----
+
+[TIP]
+====
+Perl provides an optional block for the `until` statement: `continue`:
+
+----
+until(condition){
+  # until block
+}
+continue{
+  # continue block
+}
+----
+
+The `continue` block is executed after each current iteration. The `continue`
+block is rarely used in practice.
+====
+
+[NOTE]
+====
+Different from the `for` loop statement, the `until` loop statement does not
+have the special loop variable i.e., `$_`. To use a loop variable, you must
+declare it explicitly before entering the loop or in the test condition.
+====
+
+=== Examples
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $counter = 5;
+
+until ($counter == 0) {
+   print("$counter \n");
+   $counter--;
+}
+----
+
+.Output
+....
+5
+4
+3
+2
+1
+....
+
+* First, we initialized the `$counter` variable to `5`.
+* Next, the `until` statement checked if `$counter` is equal to zero before
+  entering the loop. Because the result of the evaluation was `false` at the
+  first iteration, the loop is entered.
+* Then, we displayed the value of the `$counter` and decreased 1 from its
+  current value.
+* After that, the second iteration is reached so the expression `$counter == 0`
+  is evaluated again. The loop continued as long as the result of the
+  expression is `false`.
+* Finally, after 5 iterations, the `$counter` was equal to zero, which made the
+  condition become `true`, so the loop terminated.
+
+.until Statement and Array Example
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $counter = 0;
+my @keywords = qw(until while do for loop);
+
+until (!scalar @keywords) {
+  $counter++;
+  print shift(@keywords) . "\n";
+
+}
+print("$counter elements removed!\n");
+----
+
+.Output
+....
+until
+while
+do
+for
+loop
+5 elements removed!
+....
+
+In each iteration, we used the `shift()` function to remove the element of the
+`@keyword` array and increased the `$counter` variable by `1`. The loop is
+terminated when the `@keyword` array has no more elements.
+

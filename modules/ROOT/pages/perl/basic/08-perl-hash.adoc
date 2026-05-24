@@ -1,0 +1,116 @@
+== Perl Hash
+:source-language: perl
+
+Another compound data type called Perl hash and how to manipulate hash elements
+effectively.
+
+A Perl hash is defined by key-value pairs. Perl stores elements of a hash in
+such an optimal way that you can look up its values based on keys very fast.
+
+With the array, you use indices to access its elements. However, you must use
+descriptive keys to access hash element. A hash is sometimes referred to as an
+associative array.
+
+Like a scalar or an array variable, a hash variable has its own prefix. A hash
+variable must begin with a percent sign (`%`). The prefix `%` looks like
+key/value pair so remember this trick to name the hash variables.
+
+----
+%data = ('John Paul', 45, 'Lisa', 30, 'Kumar', 40);
+----
+
+Perl provides the `=>` operator as an alternative to a comma (`,`). It helps
+differentiate between keys and values and makes the code more elegant.
+
+When you see the `=>` operator, you know that you are dealing with a hash, not
+a list or an array.
+
+----
+my %countries =  ( England => 'English',
+                   France  => 'French',
+                   Spain   => 'Spanish',
+                   China   => 'Chinese',
+                   Germany => 'German');
+----
+
+Perl requires the keys of a hash to be strings, meanwhile, the values can be
+any scalars. If you use non-string values as the keys, you may get an
+unexpected result.
+
+In addition, a hash key must be unique. If you try to add a new key-value pair
+with the key that already exists, *the value of the existing key will be
+over-written*.
+
+[NOTE]
+====
+You can omit the quotation in the keys of the hash.
+====
+
+=== Hash Operations
+
+The most commonly used operation in the hash.
+
+.Look up Perl hash values
+
+Use a hash key inside curly brackets `{}` to look up a hash value.
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+# defines country => language hash
+my %langs = ( England => 'English',
+              France => 'French',
+              Spain => 'Spanish',
+              China => 'Chinese',
+              Germany => 'German');
+# get language of England
+my $lang = $langs{'England'}; # English
+print($lang,"\n");
+----
+
+.Add new element
+----
+$langs{'Italy'} = 'Italian';
+----
+
+.Remove a single key/value pair
+----
+delete $langs{'China'};
+----
+
+.Modify hash elements
+
+----
+# add new key value pair
+$langs{'India'} = 'Many languages';
+# modify official language of India
+$langs{'India'} = 'Hindi'; #
+----
+
+.Loop over Perl hash elements
+
+Perl provides the `keys()` function that allows you to get a list of keys in
+scalars. You can use the `keys()` function in a `for` loop statement to iterate
+the hash elements:
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+# defines country => language hash
+my %langs = ( England => 'English',
+              France  => 'French',
+              Spain   => 'Spanish',
+              China   => 'Chinese',
+              Germany => 'German');
+
+for (keys %langs) {
+    print("Official Language of $_ is $langs{$_}\n");
+}
+----
+
+The `keys()` function returns a list of hash keys. The `for` loop visits each
+key and assigns it to a special variable `$_`. Inside the loop, we access the
+value of a hash element via its key as `$langs{$_}`.
+

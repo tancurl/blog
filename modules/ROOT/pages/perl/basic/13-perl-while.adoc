@@ -1,0 +1,133 @@
+== Perl while Loop
+:source-language: perl
+
+Perl `while` loop statement executes a code block repeatedly as long as the
+test condition remains `true`. The test condition is checked at the beginning
+of each iteration.
+
+----
+while (condition) {
+    # code block
+}
+----
+
+If the `condition` evaluates to `true`, the code block inside `while` loop
+executes.
+
+At the beginning of each iteration, the `condition` is reevaluated. The loop is
+terminated if the `condition` evaluates to `false`.
+
+At some point in the loop, you have to change some variables that make the
+condition `false` to stop the loop. Otherwise, you will have an indefinite loop
+that makes your program execute until the stack overflow error occurs.
+
+The `while` loop statement has an optional block: `continue`, which executes
+after each current iteration. In practice, the `continue` block is rarely used.
+
+If you want to execute a code block as long as the condition is `false`, you
+can use `until` statement.
+
+In case you want to check the condition at the end of each iteration, you use
+the `do...while` or `do...until` statement instead.
+
+To control the loop, you use the `next` and `last` statements.
+
+.Example
+
+Happy New Year Count Down program
+
+----
+#!/usr/bin/env perl
+use warnings;
+use strict;
+
+my $counter = 10;
+
+while ($counter > 0) {
+    print("$counter\n");
+    $counter--; # count down
+    sleep(1);   # pause program for 1 second
+    if ($counter == 0) {
+        print("Happy New Year!\n");
+    }
+}
+----
+
+.Let's examine the code above in more detail
+****
+* First, declare a `$counter` variable and set its value to `10`.
+* Next, put a condition to make sure that the value of `$counter` is greater
+  than zero before entering into the loop.
+* Then, displayed the `$counter` and decreased its current value of one. We
+  used the `sleep()` function to pause the program for a second in each
+  iteration.
+* After that, use the _if statement_ to check if `$counter` is zero to print
+  the "Happy New Year" message. The code block inside the loop executes 10
+  times before the `$counter` is set to zero.
+* Finally, after each iteration, the `$counter` decreases, and its value is set
+  to zero at the 10th iteration. Perl terminated the loop.
+****
+
+.*_while loop_* with diamond operator *`<>`*
+
+You often use the while loop statement with the diamond operator `<>` to get
+the user's input from the command line:
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $num;
+my @numbers = ();
+
+print "Enter numbers, each per line :\n";
+print "ctrl-z (windows) or ctrl-d(Linux) to exit\n>";
+
+while(my $input = <>) {
+    print(">");
+    chomp $input;
+    $num = int($input);
+    push(@numbers, $num);
+}
+
+print "You entered: @numbers\n";
+----
+
+.How it works
+
+* First, assign the user's input to the `$input` variable using the diamond
+  operator (`<>`). Because it doesn't specify any filehandle for the diamond
+  operator, Perl checks the special array `@ARGV`, which is empty in this case,
+  hence instructs the diamond operator to read from `STDIN` i.e., from the
+  keyboard.
+* Second, remove the newline character from the `$input` variable using the
+  `chomp()` function and convert `$input` to an integer.
+* Third, add the integer into the `@number` array.
+
+.*_while loop_* statement modifier
+
+let's take a look at the following example:
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $i = 5;
+print($i--,"\n") while ($i > 0);
+----
+
+The `while` loop statement is placed after another statement.
+
+[NOTE]
+====
+*Perl evaluates the statements from right to left*.
+====
+
+It means that Perl evaluates the condition in the `while` statement at the
+beginning of each iteration.
+
+You use the `while` loop statement modifier only if you have one statement to
+execute repeatedly based on a condition like the above example.
+

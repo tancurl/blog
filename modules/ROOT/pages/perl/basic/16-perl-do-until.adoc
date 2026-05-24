@@ -1,0 +1,170 @@
+== Perl do until Statement
+:source-language: perl
+
+Perl `do...until` statement allows you to execute a block of code repeatedly as
+long as a test condition is `false`.
+
+----
+do {
+   # code block
+} until(condition)
+----
+
+[NOTE]
+====
+Both do...until and do...while statements check the condition at the end of each iteration.
+====
+
+Unlike the xref:#_perl_until_loop[until] or xref:#_perl_while_loop[while] statement, the
+`do...until` statement executes the code block at least once regardless of the
+result of the condition.
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $cmd;
+print("Enter a command, enter exit to quit.\n");       
+do {
+  print("> ");       
+  chomp($cmd = <STDIN>);  
+  $cmd = lc($cmd);
+  print("You entered:$cmd\n");
+} until ($cmd eq "exit");
+----
+
+* First, the code inside the `do until` loop executes, and it asks the user to
+  input a command.
+* Second, we use the `chomp()` function to remove the new line and `lc()`
+  function to make the input command lowercase. Once the user enters a command,
+  we display it immediately.
+* Third, if the user enters the `exit` command, the loop terminates because of
+  the condition `$cmd eq "exist";` otherwise, the loop executes repeatedly,
+  which asks the user to enter a command again.
+
+.Output
+....
+Enter a command, enter exit to quit.
+> perl
+You entered:perl
+> perl do until demo
+You entered:perl do until demo
+> exit
+You entered:exit
+....
+
+=== do...until with `next` and `last` statements
+
+To use the `next` and `last` statements with the `do until` statement, you need
+to use special techniques described in the following sections.
+
+To work around this, you have to place another block inside of the `do...until`
+statement for next statement:
+
+----
+do {{
+  next if expression;
+}} until(condition);
+----
+
+.Example
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $x = 0;
+my $y = 10;
+
+do {{
+ $x++;
+ next if $x % 2 == 1;
+ print("$x\n");
+}} until($x == $y);
+----
+
+.Output
+....
+2
+4
+6
+8
+10
+....
+
+To use `last` statement with the `do...until` statement, you have to place
+another block inside the `do...until` statement for the `last` statement:
+
+----
+loop_label: {
+   do {
+      last if expression;
+   } until(condition);
+}
+----
+
+.The following number-guessing game shows you how to use the last statement with do until statement
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $needle = int(rand(10)); # secret number between 0 and 9
+my $max = 4;    # the maximum number of attempts
+my $attempt = 0;    # attempt counter
+my $num = 0;    # user's input number
+
+print("Enter a number(0-9) to match, 3 times ONLY, -1 to quit:\n");    
+
+game: {
+   do {
+      # ask player to enter a secret number
+      if ($attempt < $max) {
+           print("> ");       
+           $num = int(<STDIN>); 
+           last if $num == -1; 
+           # increase the allowed attempts
+           $attempt++;
+
+      } else {
+           print("Game over!\n");
+           last;
+      }
+
+      # display the hints
+      if ($num < $needle) {
+           print "It should be greater.\n";
+      } elsif ($num > $needle) {
+           print "It should be smaller\n";
+      } else {
+           print "Bingo!\n";
+      } 
+   } until ($num == $needle);
+}
+----
+
+* First, we get a random integer number between 0 and 9 by using the
+  `int(rand(10))` expression.
+* Second, if you enter a number that is either smaller or greater than the
+  random number, the program displays the corresponding hint. If your number
+  matches the random number, you win.
+* Third, after 4 attempts, if you still cannot guess the random number, you
+  lose.
+
+We used the last statement to exit the loop if the number of attempts reaches
+the maximum allowed attempts.
+
+.Output
+....
+Enter a number(0-9) to match, 3 times ONLY, -1 to quit:
+> 5
+It should be smaller
+> 3
+It should be smaller
+> 2
+It should be smaller
+> 1
+Bingo!
+....
+

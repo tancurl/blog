@@ -1,0 +1,255 @@
+== Perl Array
+:source-language: perl
+
+Perl array and how to use arrays effectively in your program and techniques to
+manipulate array's elements.
+
+A
+xref:#_perl_list[list]
+is immutable so you cannot change it directly. In order to change a
+list, you need to store it in an array
+xref:#_perl_variables[variable].
+
+By definition, an array is a variable that provides dynamic storage for a list.
+
+In Perl, the terms array and
+xref:#_perl_list[list]
+are used interchangeably, but you have to
+note an important difference: a list is immutable whereas an array is mutable.
+In other words, you can modify the array's elements, grow or shrink the array,
+but not a list.
+
+A
+xref:#_perl_variables[scalar variable]
+begins with the dollar sign (`$`), however, an array variable begins with an
+at-sign (`@`).
+
+.How to declare an array variable
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my @days = qw(Mon Tue Wed Thu Fri Sat Sun);
+print("@days", "\n");
+----
+
+The `$` sign looks like `S` in the word scalar. And `@` looks like `a` in the
+word array, which is a simple trick to remember what type of variables you are
+working with.
+
+=== Accessing Perl array elements
+
+Like a list, you can access array elements using square brackets `[]` and indices.
+
+.Example
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my @days = qw(Mon Tue Wed Thu Fri Sat Sun);
+print($days[0]);
+
+print("\n");
+----
+
+If you take a look at the code carefully, you will see that we used `$days[0]`
+instead of `@days[0]`.
+
+This is because an array element is a scalar, you have to use the scalar prefix
+(`$`). In Perl, the rule is that the prefix represents what you want to get,
+not what you've got.
+
+Perl also allows you to access array elements using negative indices. Perl
+returns an element referred to by a negative index from the end of the array.
+For example, `$days[-1]` returns the last element of the array `@days`.
+
+You can access multiple array elements at a time using the same technique as
+the list slice.
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my @days = qw(Mon Tue Wed Thu Fri Sat Sun);
+my @weekend = @days[-2..-1]; # SatSun
+
+print("@weekend");
+print("\n");
+----
+
+=== Counting Perl array elements
+
+If you treat an array as a scalar, you will get the number of elements in the
+array.
+
+----
+my $count = @days;
+----
+
+This code causes an error in case you don't really want to count it but
+accidentally assign an array to a scalar. To be safe, use the `scalar()`
+function.
+
+----
+my @days = qw(Mon Tue Wed Thu Fri Sat Sun);
+my $count = scalar @days;
+print($count, "\n");
+----
+
+The operator `$#` returns the highest index of an array.
+
+----
+my @days = qw(Mon Tue Wed Thu Fri Sat Sun);
+my $last = $#days;
+print($last, "\n"); #" 6
+----
+
+=== Modifying Perl array elements
+
+To change the value of an element, you access the element using the index and
+assign it a new value. Perl also allows you to change the values of multiple
+elements at a time.
+
+.Example
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my @days = qw(Mon Tue Wed Thu Fri Sat Sun);
+
+$days[0] = 'Monday';
+
+@days[1..6] = qw(Tuesday Wednesday Thursday Friday Saturday Sunday);
+
+print("@days","\n");
+----
+
+=== Perl array operations
+
+Perl provides several useful functions and operators to help you manipulate
+arrays effectively. We will cover the most important ones in the following
+sections.
+
+.Perl array as a stack with push() and pop() functions
+
+Both functions treat an array as a stack. A stack works based on the last in
+first out (LIFO) philosophy. It works exactly the same as a stack of books. The
+`push()` function appends one or more elements to the end of the array, while
+the `pop()` function removes the last element from the end of the array.
+
+.How to use `push()` and `pop()` functions
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my @stack = (); # empty array
+
+print("push 1 to array\n");
+
+push(@stack,1);
+
+print("push 2 to array\n");
+push(@stack,2);
+
+print("push 3 to array\n");
+push(@stack,3);
+
+print("@stack", "\n");
+
+my $elem = pop(@stack);
+print("element: $elem\n");
+
+$elem = pop(@stack);
+print("element: $elem\n");
+
+$elem = pop(@stack);
+print("element: $elem\n");
+----
+
+.Perl array as a queue with `unshift()` and `pop()` functions
+
+If the `push()` and pop()` treat an array as a stack, the `unshift()` and
+`pop()` functions treat an array as a queue. A queue works based on the first
+in first out (FIFO) philosophy. It works like a queue of visitors. The
+`unshift()` function adds one or more elements to the front of the array, while
+the `pop()` function removes the last element of the array.
+
+.How to use `unshift()` and `pop()` functions
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my @queue = (); # empty queue
+
+print("enqueue 1 to array\n");
+unshift(@queue,1);
+
+print("enqueue 2 to array\n");
+unshift(@queue,2);
+
+printf("enqueue 3 to array\n");
+unshift(@queue,3);
+
+print("@queue", "\n"); # 3 2 1
+
+my $elem = pop(@queue);
+print("element: $elem\n");
+
+$elem = pop(@queue);
+print("element: $elem\n");
+
+$elem = pop(@queue);
+print("element: $elem\n");
+----
+
+.Sorting Perl arrays
+
+Perl provides the `sort()` function that allows you to sort an array in
+alphabetical or numerical order.
+
+.Sorting an array of strings alphabetically
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my @fruits = qw(oranges apples mango cucumber);
+my @sorted = sort @fruits;
+
+print("@sorted","\n"); # apples cucumber mango oranges
+----
+
+The `sort()` function also accepts a block of code that allows you to change
+the sort algorithm. If you want to sort an array in numerical order, you need
+to change the default sorting algorithm.
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+my @a = qw(3 2 1 4 7 6);
+print("unsorted: ", "@a", "\n"); # unsorted: 3 2 1 4 7 6
+@a = sort {$a <=> $b} @a;
+print("sorted:", "@a", "\n"); # sorted: 1 2 3 4 6 7
+----
+
+.In the example above:
+
+* First, we had an unsorted array `@a`, and we displayed the `@a` array to make
+  sure that it is unsorted.
+* Second, we used the `sort()` function to sort the `@a` array. We passed a
+  block of code `{$a <=>$b}` and the `@a` array to the sort function. The `$a`
+  and `$b` are global variables defined by the `sort()` function for sorting.
+  The operator `<=>` is used to compare two numbers. The code block `{$a <=>
+  $b}` returns -1 if `$a` < `$b`, 0 if `$a` = `$b`, and 1 if `$a` > `$b`.
+* Third, we displayed the elements of the sorted array @a.
+
+For more information on the `sort()` function, check out the
+Perl sort function xref:#_perl_sort[Perl sort function].
+

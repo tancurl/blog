@@ -1,0 +1,197 @@
+== Perl Strings
+:source-language: perl
+
+Perl's built-in string functions to manipulate strings.
+
+=== Introduction to Perl strings
+
+In Perl, a string is a sequence of characters surrounded by some kind of
+quotation marks. A string can contain ASCII, UNICODE, and escape sequences
+characters such as `\n`.
+
+A Perl string has a length that depends on the amount of memory in your system,
+which is theoretically unlimited.
+
+The following example demonstrates single and double-quoted strings.
+
+----
+my $s1 = "string with doubled-quotes";
+my $s2 = 'string with single quote';
+----
+
+It is important to remember that the double-quoted string replaces variables
+inside it by their values, while the single-quoted string treats them as text.
+This is known as variable interpolation in Perl.
+
+=== Perl string alternative delimiters
+
+Besides the single and double quotes, Perl also allows you to use quote-like
+operators such as:
+
+* The `q//` acts like a single-quoted string.
+* The `qq//` acts like double-quoted string
+
+You can choose any non-alphabetic and non-numeric characters as the delimiters,
+not only just characters `//`.
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $s= q/"Are you learning Perl String today?" We asked./;
+print($s, "\n");
+
+my $name = 'Jack';
+my $s2 = qq/"Are you learning Perl String today?"$name asked./;
+print($s2, "\n");
+----
+
+.How it works
+
+* First, defined a single-quoted string variable with the quote-like operator
+  `q/`. The string  `$s` ends with `/`
+* Second, defined a double-quoted string with the quote-like operator `qq/`. In
+  this case, we used the `$name` variable inside a string and it is replaced by
+  its value, `Jack`
+
+The following example demonstrates string with the `^` delimiter.
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $s = q^A string with different delimiter ^;
+print($s,"\n");
+----
+
+=== Perl string functions
+
+Perl provides a set of functions that allow you to manipulate strings
+effectively. We cover the most commonly used string functions in the following
+section for your reference.
+
+.Perl string length
+
+To find the number of characters in a string, you use the `length()` function.
+
+----
+my $s = "This is a string\n";
+print(length($s),"\n"); #17
+----
+
+.Changing cases of string
+
+To change the cases of a string you use a pair of functions `lc()` and `uc()`
+that returns the lowercase and uppercase versions of a string.
+
+----
+my $s = "Change cases of a string\n";
+print("To upper case:\n");
+print(uc($s),"\n");
+
+print("To lower case:\n");
+print(lc($s),"\n");
+----
+
+.Search for a substring inside a string
+
+To search for a substring inside a string, you use `index()` and `rindex()`
+functions.
+
+* The `index()` function searches for a substring inside a string from a
+  specified position and returns the position of the first occurrence of the
+  substring in the searched string. If the position is omitted, it searches
+  from the beginning of the string.
+* The `rindex()` function works like the `index()` function except it searches
+  from the end of the string instead of from the beginning.
+
+The following example demonstrates how to use the `index()` and `rindex()`
+functions:
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $s = "Learning Perl is easy\n";
+my $sub = "Perl";
+my $p = index($s,$sub); # rindex($s,$sub);
+print(qq\The substring "$sub" found at position "$p" in string "$s"\,"\n");
+----
+
+.Get or modify substring inside a string
+
+To extract a substring out of a string, you use the `substr()` function.
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+# extract substring
+my $s = "Green is my favorite color";
+my $color  = substr($s, 0, 5);      # Green
+my $end    = substr($s, -5);        # color
+
+print($end,":",$color,"\n");
+
+# replace substring
+substr($s, 0, 5, "Red"); #Red is my favorite color
+print($s,"\n");
+----
+
+.Other useful Perl string functions
+
+The following table illustrates other useful Perl string functions with their
+descriptions:
+
+|===
+| Function | Description
+
+| `chr`
+| Return ASCII or UNICODE character of a number
+
+| `crypt`
+| Encrypts passwords in one way fashion
+
+| `hex`
+| Converts a hexadecimal string to the corresponding value
+
+| `index`
+| Searches for a substring inside a string returns position where the first occurrence of the substring found
+
+| `lc`
+| Returns a lowercase version of the string
+
+| `length`
+| Returns the number of characters of a string
+
+| `oct`
+| Converts a string to an octal number
+
+| `ord`
+| Returns the numeric value of the first character of a string
+
+| `q/string/`
+| Creates single-quoted strings
+
+| `qq/string/`
+| Creates double-quoted strings
+
+| `reverse`
+| Reverses a string
+
+| `rindex`
+| Searches for a substring from right to left
+
+| `sprintf`
+| Formats string to be used with print()
+
+| `substr`
+| Gets or modifies a substring in a string
+
+| `uc`
+| Returns the uppercase version of the string
+|===
+

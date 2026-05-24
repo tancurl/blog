@@ -1,0 +1,86 @@
+== Perl Numbers
+:source-language: perl
+
+Perl has two kinds of numbers: integer and floating-point numbers.
+
+=== Perl integers
+
+Integers are whole numbers that have no digits after the decimal points i.e
+`10`, `-20` or `100`.
+
+In Perl, integers are often expressed as decimal integers, base 10. The
+following illustrates some integer numbers:
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+$x = 20;
+$y = 100;
+$z = -200;
+----
+
+When the integer number is big, you often use a comma as a separator to make it
+easier to read e.g., 123,763,213.
+
+However, Perl already uses a comma (`,`) as a separator in the list so for
+integer numbers Perl uses an underscore character (`_`) instead. In this case,
+`123,763,213` is written in Perl as `123_763_213`.
+
+Take a look at the following example:
+
+----
+my $a = 123_763_213;
+print($a, "\n"); # 123763213
+----
+
+In the output of the example above, Perl uses no comma or underscore as the
+separator.
+
+Besides the decimal format, Perl also supports other formats including binary,
+octal, and hexadecimal.
+
+The following table shows you prefixes for formatting with binary, octal, and
+hexadecimal integers.
+
+|===
+| Number | Format
+
+| 0b123
+| Binary integer using a prefix of 0b
+
+| 0255
+| Octal integer using a prefix of 0
+
+| 0xABC
+| Hexadecimal integer using a prefix of 0x
+
+|===
+
+All the following integer numbers are 12 in Perl:
+
+....
+12
+0b1100
+014
+0xC
+....
+
+=== Perl floating-point numbers
+
+You use floating-point numbers to store real numbers. Perl represents
+floating-point numbers in two forms:
+
+* *Fixed point*: the decimal point is fixed in the number to denote fractional
+  part starts e.g., `100.25`
+* *Scientific*: consists of a significand with the actual number value and an
+  exponent representing the power of 10 that the significand is multiplied by,
+  for example, `+1.0025e2` or  `-1.0025E2` is `100.25.`
+
+The floating-point number holds 8 bytes, with 11 bits reserved for the exponent
+and 53 bits for significand.
+
+The range of floating-point numbers is essentially determined by the standard C
+library of the underlying platform where Perl is running.
+

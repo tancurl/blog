@@ -1,0 +1,162 @@
+== Perl given Statement
+:source-language: perl
+
+Perl `given` statement, is similar to the switch case statement in other
+languages.
+
+The `given` statement works like a series of if statements that allow you to
+match an expression or variable against different values, depending on the
+matched value, Perl will execute statements in the corresponding `when` clause.
+
+.Pragma for using given statement
+Perl introduced the `given` statement since version 5.10. In order to use the
+Perl `given` statement, you must use the following pragma:
+
+----
+use v5.10;
+----
+
+Or use the following pragma:
+
+----
+use feature "switch";
+----
+
+.Perl *_given_* Syntax
+
+There are several new keywords introduced along with the `given` such as:
+`when`, `break` and `continue`.
+
+----
+given (expr) {
+     when (expr1) { statement; }
+     when (expr1) { statement; }
+     when (expr1) { statement; }
+     ...
+}
+----
+
+.*_given_* statement in greater detail
+****
+* Both given and `when` accept arguments in a scalar context.
+* The type of argument you pass to the `given` clause determines the kind of
+  pattern matching that Perl will use to perform matching. If the argument
+  appears to be a `Boolean` expression, Perl evaluates it directly. Otherwise,
+  Perl will use the smart match operator to evaluate the argument, something
+  like `$_ ~~ expr`
+* To break out a `when` block, you use the `break` statement. Perl uses `break`
+  statement implicitly for all `when` blocks so you don't have to explicitly
+  specify it.
+* To fall through from one case to the next, you use the `continue` statement.
+****
+
+[NOTE]
+====
+* From version 5.12 you can use `when` as a statement modifier.
+* From version 5.14, the `given` statement returns the last evaluated
+  expression if no condition is `true` or the last evaluated expression of the
+  `default` clause. The `given` statement also returns an empty list when the
+  break statement is encountered or no condition is matched.
+====
+
+.*_given_* statement examples
+
+The following program asks the user to input an RGB (red, green, blue) color and returns its color code:
+
+----
+use v5.10; # at least for Perl 5.10
+#use feature "switch";
+use warnings;
+use strict;
+
+my $color;
+my $code;
+
+print("Please enter a RGB color to get its code:\n");
+$color = <STDIN>;
+chomp($color);
+$color = uc($color);
+
+given($color){
+    when ('RED') {  $code = '#FF0000'; }
+    when ('GREEN') {  $code = '#00FF00'; }
+    when ('BLUE') {  $code = '#0000FF'; }
+    default {
+        $code = '';
+    }
+}
+if ($code ne '') {
+    print("code of $color is $code \n");
+} else {
+    print("$color is not RGB color\n");
+}
+----
+
+.How program works
+****
+* First, we declared the `pragma use v5.10;` in order to use the `given`
+  statement.
+* Second, we asked the user for a color, we removed the newline by using the
+  `chomp()` function and made the input color upper case so that whatever
+  format of color the user entered is accepted e.g., Red, rEd or RED is the red
+  color.
+* Third, we used the `given` statement to check. If no color is found, then we
+  set the color code to blank in the default clause. Based on the user's input,
+  we got the corresponding color code and display it.
+****
+
+From Perl version 5.12, you can use the `when` statement as a statement
+modifier like the following example:
+
+----
+given ($color) {
+    $code = '#FF0000' when 'RED';
+    $code = '#00FF00' when 'GREEN';
+    $code = '#0000FF' when 'BLUE';
+    default { $code = ''; }
+}
+----
+
+In addition, the given statement returns a value that is the result of the last
+expression.
+
+----
+print do {
+    given ($color) {
+        "#FF0000\n" when 'RED';
+        "#00FF00\n" when 'GREEN';
+        "#0000FF\n" when 'BLUE';
+        default { ''; }
+    }
+}
+----
+
+More complex example:
+
+----
+use v5.12;
+use strict;
+use warnings;
+
+print 'Enter something: ';
+chomp( my $input = <> );
+
+print do {
+    given ($input) {
+        "The input has numbers\n"  when /\d/;
+        "The input has letters\n"  when /[a-zA-Z]/;
+        default { "The input has neither number nor letter\n"; }
+    }
+}
+----
+
+.How the program works
+****
+* The program asks the user to enter anything that can be numbers, letters, or
+  both.
+* In the `when` clause, we used a very special expression that is known as a
+  regular expression. The `/\d/` matches any string that contains only numbers,
+  The `/[a-zA-Z]/` expression matches the string that contains only letters. In
+  this case, the `given` statement can do more advanced matches.
+****
+

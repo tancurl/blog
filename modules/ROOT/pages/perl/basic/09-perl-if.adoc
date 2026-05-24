@@ -1,0 +1,96 @@
+== Perl if Statement
+:source-language: perl
+
+Perl `if` statement allows you to control the execution of your code based on
+conditions. The simplest form of the `if` statement is as follows:
+
+----
+if (expression);
+----
+
+In this form, you can put the `if` statement after another statement. Let's
+take a look at the following example:
+
+----
+my $a = 1;
+print("Welcome to Perl if tutorial\n") if ($a == 1);
+----
+
+The message is only displayed if the expression `$a == 1` evaluates to `true`.
+
+.How Perl defines *_true_* and *_false_*?
+****
+* Both number 0 and string "0" are `false`.
+* The `undefined` value is `false`.
+* The empty list `()` is `false`.
+* The empty string `""` is `false`.
+* Everything else is `true`.
+****
+
+.Execute multiple statements based on a condition
+----
+if (expression) {
+   statement;
+   statement;
+   ...
+}
+----
+
+[NOTE]
+====
+The curly braces `{}` are required even if you have a single statement to
+execute
+====
+
+.*_if..else_* Statement
+
+Perl provides the `if else` statement that allows you to execute a code block
+if the expression evaluates to `true`, otherwise, the code block inside the
+`else` branch will execute.
+
+----
+if (expression) {
+   // if code block;
+} else {
+   // else code block;
+}
+----
+
+.Example
+----
+my $a = 1;
+my $b = 2;
+if ($a == $b) {
+    print("a and b are equal\n");
+} else {
+    print("a and b are not equal\n");
+}
+----
+
+The code block in the else branch will execute because $a and $b are not equal.
+
+.*_if..elsif_* statement
+
+In some cases, you want to test more than one condition:
+
+====
+* If `$a` and `$b` are equal, then do this.
+* If `$a` is greater than `$b` then do that.
+* Otherwise, do something else.
+====
+
+Perl provides the if elsif statement for checking multiple conditions and
+executing the corresponding code block:
+
+----
+if (expression) {
+    ...
+} elsif (expression2) {
+    ...
+} elsif (expression3) {
+    ...
+} else {
+    ...
+}
+----
+

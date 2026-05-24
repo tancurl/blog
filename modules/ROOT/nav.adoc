@@ -1,5 +1,9 @@
 * xref:python/index.adoc[Python]
 * xref:perl/index.adoc[Perl]
-** xref:perl/notes.adoc[Perl Notes]
+** Basics
+*** xref:perl/basic/index.adoc[Syntax 101]
+** Advanced Topics
+*** xref:perl/advanced/regex.adoc[Regular Expression]
+** xref:perl/note/index.adoc[Notes]
 * xref:lua/index.adoc[Lua]
 * xref:go/index.adoc[Go]

@@ -1,0 +1,164 @@
+****
+Basic *Perl syntax* to get started with Perl language quickly including
+variables, expressions, statements, block, comments, whitespaces, and keywords.
+****
+
+== Perl Syntax
+:source-language: perl
+
+Perl programming language tutorial
+
+.Hello World!
+----
+#!/bin/perl
+use warnings;
+print("Hello world!\n");
+----
+
+[NOTE]
+====
+`use warnings;` is called _pragma_ in Perl. This pragma instructs Perl to turn
+on additional warning reporting.
+====
+
+=== Values and Variables
+
+You develop Perl programs to manipulate some kinds of data. The data can be
+either xref:#_perl_numbers[numbers], xref:#_perl_strings[strings], or more
+complex such as a xref:#_perl_list[list]. Data is held as value.
+
+.Some values
+----
+10
+20.2
+"Perl Syntax"
+----
+
+To hold a piece of data, you need *variables*. You use a variable to store a
+value. And through the name of the variable, you can process the value.
+
+The following illustrates some variables in Perl:
+
+.Define variables
+----
+$x = 10;
+$y = 20;
+$s = "Perl string";
+----
+
+We have two integer variables (`$x` and `$y`) and one string variable (`$s`).
+For more information on Perl variables, check it out the
+xref:#_perl_variables[Perl variables].
+
+=== Expressions
+
+In Perl, an expression is anything that returns a value.
+
+The expression can be used in a larger expression or a statement. The expression can be a literal
+xref:#_perl_numbers[number], complex expression with
+xref:#_perl_operators[operators], or a
+xref:#_perl_subroutine[function (aka subroutine)], call.
+
+For example, 3 is an expression that returns a value of 3. The `$a + $b` is an
+expression that returns the sum of two variables: `$a` and `$b`.
+
+=== Statements
+
+A statement is made up of expressions. A statement is executed by Perl at run-time.
+
+Each Perl statement must end with a semicolon (`;`). The following example
+shows the statements in Perl:
+
+----
+$c = $a + $b;
+print($c);
+----
+
+=== Blocks
+
+A block is made up of statements wrapped in curly braces `{}`. You use blocks
+to organize statements in the program.
+
+The following example illustrates a block in Perl:
+
+----
+{
+	$a = 1;
+	$a = $a + 1;
+	print($a);
+}
+----
+
+Any variable declared inside a block has its own scope.
+
+It means the variables declared inside a block only last as long as the block
+is executed.
+
+=== Comments
+
+In Perl, a comment begins with a hash (`#`) character. Perl interpreter ignores
+comments at both compile-time and runtime.
+
+Typically, you use comments to document the logic of your code. The code tells
+you what it does however comments provides information on why the code does so.
+
+Comments are very important and useful to you as a programmer in order to
+understand the code later. They're also useful to other programmers who will
+read and maintain your programs in the future.
+
+Let's take a look at the following example:
+
+----
+$salary = $salary + 1.05;
+----
+
+What the code does is to increase the value of the variable `$salary` 5%.
+However, why it does so was not documented.
+
+Therefore the following code with comment is much clearer.
+
+----
+# increase salary %5 for employees who achieve KPI
+$salary = $salary + 1.05;
+----
+
+Perl also allows you to place a comment on the same line as the statement. See
+the following example:
+
+----
+$counter = 0; # reset the counter
+----
+
+It is important to use comments properly to make your code easier to
+understand.
+
+=== Whitespace
+
+Whitespaces are spaces, tabs, and newlines. Perl is very flexible in terms of
+whitespaces usages. Consider the following example:
+
+----
+$x = 20;
+$y=20;
+----
+
+Both lines of code work perfectly. We surrounded the assignment operator (`=`)
+with whitespace in the first statement, but not in the second one.
+
+Perl really doesn't care about the whitespace. However, it is a good practice
+to use whitespace to make the code more readable.
+
+=== Keywords
+
+Perl has a set of keywords that have special meanings to its language.
+
+Perl keywords fall into some categories such as built-in function and control
+keywords.
+
+You should always avoid using keywords to name variables, functions,
+xref:#_perl_modules[modules], and other objects. Check it
+out the http://learn.perl.org/docs/keywords.html[Perl keywords].
+
+Sometimes, it is fine to use a variable name such as `$print`, which is similar
+to the built-in `print()` function. However, this may lead to confusion. In
+addition, if the program has an issue, it's more difficult to troubleshoot.

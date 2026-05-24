@@ -1,0 +1,209 @@
+= Perl Regular Expression
+:source-language: perl
+
+[NOTE]
+====
+A regular expression is a pattern that provides a flexible and concise means to
+match the string of text. A regular expression is also referred to as _regex_
+or _regexp_.
+
+A regular expression can be either simple or complex, depending on the pattern
+you want to match.
+====
+
+== Basic Matching
+
+----
+string =~ regex;
+----
+
+The operator `=~` is the binding operator. The whole expression returns a value
+to indicate whether the regular expression `regex` was able to match the
+`string` successfully.
+
+.Example
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $s = 'Perl regular expression is powerful';
+
+print "match found\n" if ($s =~ /ul/);
+----
+
+.Output
+....
+match found
+....
+
+To identify if a string does not match a given regular expression, you use a
+negated form of the binding operator (`!~`). The following example demonstrates
+how to use the negation to find all strings in an array that does not match the
+regular expression `/er/`:
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my @words = (
+    'Perl',
+    'regular expression',
+    'is',
+    'a very powerul',
+    'feature'
+);
+
+foreach (@words) {
+   print("$_ \n") if ($_ !~ /er/);
+}
+----
+
+.Output
+....
+regular expression
+is
+feature
+....
+
+[NOTE]
+====
+If you want to match a pattern that contains a forward slash (`/`) character,
+you have to escape it using a backslash (`\`) character. You can also use a
+different delimiter if you precede the regular expression with the letter `m`,
+the letter `m` stands for match
+====
+
+.Example
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my @html = (
+   '<p>',
+   'html fragement',
+   '</p>',
+   '<br>',
+   '<span>This is a span</span>'
+);
+
+foreach (@html) {
+   print("$_ \n") if ($_ =~ m"/");
+}
+----
+
+* First, declared an array of strings that contains HTML code.
+* Second, looped over the elements of the array and displayed the element that
+  contains any number of forward-slash characters (`/`). Notice that we
+  preceded the letter _m_ and *used double quotes as the delimiter* for the
+  regular expression.
+
+.Output
+....
+</p>
+<span>This is a span</span>
+Press any key to continue . . .
+....
+
+== Matching case-insensitively
+
+Take a look at the following example:
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $s = "Regular expression";
+print "match\n" if $s =~ /Expression/;
+----
+
+We expect the output of the program is "match". However, it is not. Because the
+string `$s` does not contain the word `Expression`, but expression with the
+first letter E in lowercase.
+
+To instruct Perl to match a pattern case insensitive, you need to add a
+modifier `i`:
+
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my $s = "Regular expression";
+print "match\n" if $s =~ /Expression/i;
+----
+
+== Perl regular expression with quantifiers
+
+The previous examples, we have created regular expressions by simply putting
+the characters we want to match between a pair of slashes. What if you want to
+find the same sequence of characters multiple times? you may quickly write
+something like `/aaa/` But how about 100 times or more? Fortunately, a regular
+expression engine provides you with quantifiers to build such kinds of
+patterns. For example, to find a match 100 times in a text, you could do it
+like `/a{100}/`.
+
+.Some useful quantifiers
+|====
+
+| *Quantifier* | *Meaning*
+
+| `A*`
+| Zero or more A
+
+| `A+`
+| One or more A
+
+| `A?`
+| A is optional
+
+| `A{10}`
+| Ten A
+
+| `A{1,5}`
+| From one to five A
+
+| `A{2,}`
+| Two A or more
+
+|====
+
+.Example
+----
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+my @words = ("available", "avatar", "avalon");
+
+foreach (@words) {
+   print $_, "\n" if (/a*l+/);
+}
+----
+
+The regular expression `/a*l+/` means *zero or more `a` followed by at least
+one or more `l`*.
+
+.Output
+....
+available
+avalon
+....
+
+[NOTE]
+====
+The regular expression engine treats some characters in a special way.
+These characters are called _metacharacters_.
+
+.Some metacharacters in Perl regular expressions
+----
+{}[]()^$.|*+?\
+----
+
+To match the literal version of those characters, you have to a backslash `\`
+in front of them in the regular expressions.
+====
+
