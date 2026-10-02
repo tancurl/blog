@@ -1,2 +1,4 @@
-* xref:index.adoc[TOPIC]
-** xref:CATEGORY/index.adoc[SUB TOPIC]
+* xref:index.adoc[DevOps Engineer]
+* xref:index.adoc[Infrastructure Engineer]
+* xref:index.adoc[Planform Engineer]
+// ** xref:CATEGORY/index.adoc[SUB TOPIC]

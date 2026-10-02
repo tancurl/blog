@@ -1,6 +1,6 @@
-name: LABEL
+name: resume
 version: v0.1.0
-title: TOPIC
+title: Resume
 nav:
 - modules/ROOT/nav.adoc
 
