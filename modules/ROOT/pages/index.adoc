@@ -1,3 +1,24 @@
 = Resume
 
 This is where my resume gonna live.
+
+[.two-columns]
+--
+[.column]
+====
+== First column
+
+Content for the first column.
+
+* One
+* Two
+====
+
+[.column]
+====
+== Second column
+
+Content for the second column.
+====
+--
+
