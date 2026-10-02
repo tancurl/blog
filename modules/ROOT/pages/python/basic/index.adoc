@@ -1,3 +1,16 @@
 = Basics of Python Programming
 
-This is just a simple test
+include::basic/01-intro.adoc[]
+include::basic/02-getting-started.adoc[]
+include::basic/03-syntax.adoc[]
+include::basic/04-comments.adoc[]
+include::basic/05-variables.adoc[]
+include::basic/06-data-types.adoc[]
+include::basic/07-numbers.adoc[]
+include::basic/08-casting.adoc[]
+include::basic/09-strings.adoc[]
+include::basic/10-booleans.adoc[]
+include::basic/11-operators.adoc[]
+include::basic/12-lists.adoc[]
+include::basic/13-tuples.adoc[]
+

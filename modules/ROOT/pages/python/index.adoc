@@ -1,3 +1,4 @@
 = Python Prorgamming Language
 
+* xref:basic/index.adoc[Basics]
 
